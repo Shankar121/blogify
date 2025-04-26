@@ -1,10 +1,11 @@
-import { Resolver, Mutation, Args, Context } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Context, GqlExecutionContext } from '@nestjs/graphql';
 import { AuthService } from 'src/services/auth.service';
 import { LoginResponse } from 'src/dtos/login-response.dto';
 import { User } from 'src/models/user.model';
 import { RegisterUserInput } from 'src/dtos/register-user-input.dto';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/utils/auth.guard';
+import { GqlRequest } from 'src/utils/gql.request';
 
 @Resolver(() => User)
 export class AuthResolver {
@@ -26,7 +27,7 @@ export class AuthResolver {
       httpOnly: true,
       sameSite: 'lax', // CSRF protection
       secure: process.env.ENV === 'production',
-      maxAge: 1000 * 60 * 60, // 1 hour
+      maxAge: 1000 * 60 * 60 * 24, // 1 hour
     });
 
     context.res.cookie('jid', refreshToken, {
@@ -55,7 +56,7 @@ export class AuthResolver {
   @Mutation(() => User)
   @UseGuards(AuthGuard)
   async me(@Context() context: any) {
-    console.log('Current user:', context.getContext().req.user);
-    return context.getContext().req.user;
+    console.log('Current user:', context.req.user);
+    return context.req.user;
   }
 }
