@@ -2,10 +2,33 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type HelloWorldModel {
-  value: String!
+type LoginResponse {
+  accessToken: String!
+  refreshToken: String!
+}
+
+type User {
+  id: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
 }
 
 type Query {
-  sayHello: HelloWorldModel!
+  hello: String!
+}
+
+type Mutation {
+  login(email: String!, password: String!): LoginResponse!
+  register(data: RegisterUserInput!): User!
+  me: User!
+}
+
+input RegisterUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  password: String!
 }
