@@ -9,6 +9,7 @@ import { AuthModule } from './modules/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 import { HealthCheckResolver } from './resolvers/health-check.resolvers';
+import { BlogModule } from './modules/blog.module';
 
 @Module({
   imports: [
@@ -20,10 +21,12 @@ import { HealthCheckResolver } from './resolvers/health-check.resolvers';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       context: ({ req, res }) => ({ req, res }),
+      cors: false,
     }),
     AuthModule,
+    BlogModule,
   ],
   controllers: [AppController],
-  providers: [AppService, UsersModule, AuthModule, HealthCheckResolver],
+  providers: [AppService, UsersModule, AuthModule, HealthCheckResolver, BlogModule],
 })
 export class AppModule {}

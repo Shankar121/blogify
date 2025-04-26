@@ -30,15 +30,14 @@ export class AuthService {
 
   async login(user: UserDocument) {
     const payload = { sub: user._id, email: user.email };
-    console.log('payload', payload);
     const accessToken = this.jwtService.sign(payload, {
-      expiresIn: '15m',
+      expiresIn: '1d',
     });
 
     const refreshToken = jwt.sign(payload, process.env.REFRESH_SECRET, {
-      expiresIn: '7d',
+      expiresIn: '30d',
     });
-    console.log('payload', user._id?.toString(), { refreshToken });
+
     await this.usersService.updateUser(user._id?.toString(), { refreshToken });
 
     return { accessToken, refreshToken };
