@@ -47,7 +47,7 @@ export default defineComponent({
             tags: tags.value.split(',').map((tag: string) => tag.trim()) // Split tags into array
           }
         })
-        console.log('Blog created:', response)
+        window.location.href = '/myblogs' // Redirect to My Blogs page after creation
       } catch (error) {
         console.error('Error creating blog:', error)
       }

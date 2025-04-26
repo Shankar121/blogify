@@ -5,7 +5,7 @@ import { User } from 'src/models/user.model';
 import { RegisterUserInput } from 'src/dtos/register-user-input.dto';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/utils/auth.guard';
-
+import { Response } from 'express';
 @Resolver(() => User)
 export class AuthResolver {
   constructor(private authService: AuthService) {}
@@ -57,5 +57,20 @@ export class AuthResolver {
   async findUser(@Context() context: any) {
     console.log('Current user:', context.req.user);
     return context.req.user;
+  }
+
+  @Mutation(() => Boolean)
+  async logout(@Context('res') res: Response): Promise<boolean> {
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+    });
+    res.clearCookie('refresh_token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+    });
+    return true;
   }
 }

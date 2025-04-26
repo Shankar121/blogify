@@ -13,7 +13,7 @@
     <div>
       <button
         v-if="isLoggedIn"
-        @click="logout"
+        @click="logoutUser"
         class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
       >
         Logout
@@ -36,15 +36,30 @@ import { useAuthStore } from '../stores/auth.store'
 import { useRouter } from 'vue-router'
 import { useQuery } from '@vue/apollo-composable'
 import { gql } from 'graphql-tag'
+import { useMutation } from '@vue/apollo-composable'
 
 const router = useRouter()
 const authStore = useAuthStore()
 
 const isLoggedIn = computed(() => !!authStore.user)
+const LOGOUT_MUTATION = gql`
+  mutation Logout {
+    logout
+  }
+`
+const { mutate: logout } = useMutation(LOGOUT_MUTATION)
 
-const logout = () => {
-  authStore.logout()
-  router.push('/login')
+const logoutUser = async () => {
+  try {
+    await logout({
+      mutation: LOGOUT_MUTATION
+    })
+
+    authStore.logout()
+    await router.push('/login')
+  } catch (error) {
+    console.error('Logout failed:', error)
+  }
 }
 
 const ME_QUERY = gql`
