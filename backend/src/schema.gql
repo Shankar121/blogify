@@ -19,7 +19,7 @@ type Blog {
   _id: ID!
   title: String!
   content: String!
-  authorId: String!
+  author: User
   tags: [String!]
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -56,6 +56,10 @@ input RegisterUserInput {
 input CreateBlogInput {
   title: String!
   content: String!
-  authorId: String
+  author: String
   tags: [String!]
+}
+
+type Subscription {
+  blogCreated: Blog!
 }

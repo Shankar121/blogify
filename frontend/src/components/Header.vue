@@ -11,6 +11,8 @@
     </nav>
 
     <div>
+      Hello, {{ authStore.user ? authStore.user.firstName : '' }}
+      &nbsp; &nbsp; &nbsp;
       <button
         v-if="isLoggedIn"
         @click="logoutUser"
@@ -30,7 +32,6 @@
 </template>
 
 <script lang="ts" setup>
-console.log('Header component loaded')
 import { computed, onMounted, watch } from 'vue'
 import { useAuthStore } from '../stores/auth.store'
 import { useRouter } from 'vue-router'

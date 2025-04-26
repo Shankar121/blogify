@@ -14,11 +14,15 @@ export class BlogService {
   }
 
   async findAll(): Promise<Blog[]> {
-    return this.blogModel.find().exec();
+    return this.blogModel
+      .find()
+      .sort({ createdAt: -1 })
+      .populate('author', 'firstName lastName email')
+      .exec();
   }
 
-  async findByAuthorId(authorId: string): Promise<Blog[]> {
-    return this.blogModel.find({ authorId }).exec();
+  async findByAuthorId(author: string): Promise<Blog[]> {
+    return this.blogModel.find({ author }).sort({ createdAt: -1 }).exec();
   }
 
   async findOne(id: string): Promise<Blog> {

@@ -9,7 +9,7 @@ export class CreateBlogInput {
   content: string;
 
   @Field(() => String, { nullable: true })
-  authorId?: string;
+  author?: string;
 
   @Field(() => [String], { nullable: true })
   tags?: string[];

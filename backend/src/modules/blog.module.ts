@@ -8,7 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from 'src/utils/jwt.utils';
 import { UsersService } from 'src/services/users.service';
 import { UsersModule } from './users.module';
-
+import { PubSub } from 'graphql-subscriptions';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Blog.name, schema: BlogSchema }]),
@@ -22,6 +22,6 @@ import { UsersModule } from './users.module';
     }),
     UsersModule,
   ],
-  providers: [BlogService, JwtStrategy, BlogResolver, UsersService],
+  providers: [BlogService, JwtStrategy, BlogResolver, UsersService, PubSub],
 })
 export class BlogModule {}
