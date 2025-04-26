@@ -45,7 +45,13 @@ export class BlogResolver {
       if (!blog) {
         throw new Error('Blog creation failed');
       }
-      await this.pubSub.publish('blogCreated', blog);
+      await this.pubSub.publish('blogCreated', {
+        title: blog.title,
+        content: blog.content,
+        tags: blog.tags,
+        createdAt: new Date(),
+        author: user,
+      });
       return blog;
     } catch (error) {
       console.error('Error creating blog:', error);

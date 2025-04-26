@@ -3,7 +3,7 @@ import { User } from './user.model';
 
 @ObjectType()
 export class Blog {
-  @Field(() => ID)
+  @Field(() => ID, { nullable: true })
   _id: string;
 
   @Field()

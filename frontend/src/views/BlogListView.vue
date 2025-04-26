@@ -5,7 +5,7 @@
     <div v-if="error" class="error">{{ error.message }}</div>
     <div v-if="!loading && blogs.length === 0" class="no-blogs">No blogs available.</div>
     <ul v-if="!loading && blogs.length > 0">
-      <li v-for="blog in blogs" :key="blog._id">
+      <li v-for="blog in blogs" :key="blog.title">
         <h2>{{ blog.title }}</h2>
         <small>Published At: {{ new Date(blog.createdAt).toLocaleString() }}</small>
         <br />
@@ -28,7 +28,6 @@ import gql from 'graphql-tag'
 const GET_BLOGS = gql`
   query GetBlogs {
     blogs {
-      _id
       title
       content
       tags
@@ -44,9 +43,13 @@ const GET_BLOGS = gql`
 const BLOG_CREATED_SUBSCRIPTION = gql`
   subscription BlogCreated {
     blogCreated {
-      _id
       title
       content
+      tags
+      author {
+        firstName
+        lastName
+      }
       createdAt
     }
   }
