@@ -11,7 +11,7 @@
     </nav>
 
     <div>
-      Hello, {{ authStore.user ? authStore.user.firstName : '' }}
+      <span v-if="authStore.user">Hello, {{ authStore.user.firstName }}</span>
       &nbsp; &nbsp; &nbsp;
       <button
         v-if="isLoggedIn"

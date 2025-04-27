@@ -9,7 +9,7 @@
         <input v-model="password" type="password" placeholder="Password" required />
       </div>
       <button type="submit">Submit</button>&nbsp;&nbsp;
-      <router-link to="/register">Already have an account? Register</router-link>
+      <router-link to="/register">Don't have an account? Register</router-link>
     </form>
   </div>
 </template>
